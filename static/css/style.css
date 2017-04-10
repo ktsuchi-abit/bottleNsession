@@ -1,0 +1,48 @@
+body {
+ text-align:center;
+}
+
+#container {
+ width:96%;
+ margin-left:auto;
+ margin-right:auto;
+ text-align:left;
+ background:pink;
+}
+
+#wrapper {
+ width:70%;
+ float:right;
+ background:grey;
+}
+
+
+#boxD {
+ width:26%;
+ float:left;
+ background:yellow;
+}
+
+#boxE {
+ width:100%;
+ clear:both;
+}
+
+#boxA {
+ width:100%;
+ clear:both;
+}
+
+#boxB {
+ width:60%;
+ float:left;
+ background:green;
+ overflow:auto;
+ height:500px;
+}
+
+#boxC {
+ width:30%;
+ float:right;
+ background:blue;
+}

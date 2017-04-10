@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css?1" type="text/css" />
+</head>
+<body>
+<div id="container">
+
+　<div id="boxA">
+　A（ヘッダ）
+　</div>
+
+　<div id="wrapper">
+　　<div id="boxB">{% block contents %}{% endblock %}</div>
+　　<div id="boxC">{% block sidemenu %}{% endblock %}</div>
+　</div>
+　<div id="boxD">D（サイドバー2）　<br><a href="/top">main1</a><br><a href="/top2">main2</a></div>
+
+　<div id="boxE">
+　E（フッタ）
+　</div>
+
+</div>
+</body>
+</html>
