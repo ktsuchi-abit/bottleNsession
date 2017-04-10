@@ -16,7 +16,16 @@
 　　<div id="boxB">{% block contents %}{% endblock %}</div>
 　　<div id="boxC">{% block sidemenu %}{% endblock %}</div>
 　</div>
-　<div id="boxD">D（サイドバー2）　<br><a href="/top">main1</a><br><a href="/top2">main2</a></div>
+　<div id="boxD">D（サイドバー2）　<br><a href="/top">main1</a><br><a href="/top2">main2</a>
+    <ul>
+      <li><a href="/logout">logout</a>
+      <li><a href="/user/pw">change password</a>
+      % if role=='admin':
+      <li><a href="/user">show users</a>
+      <li><a href="/user/add">add user</a>
+      % end
+    </ul>
+</div>
 
 　<div id="boxE">
 　E（フッタ）
