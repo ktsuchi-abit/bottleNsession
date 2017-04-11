@@ -8,10 +8,8 @@
 {# base.html の contents の中に入れるコンテンツ #}
 
 {% block contents %}
-%m=message
-%print(message)
-%print(m)
-<p>test {{ m }} </p>
+
+
     <form action="{{ appUrl }}/user/pw" method="post">
       <table>
         <tr><td>Current PW:</td><td><input type="password" name="current_pw" /></td></tr>
