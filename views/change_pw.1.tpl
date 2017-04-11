@@ -1,17 +1,5 @@
-{% extends 'base.html' %}
+% rebase('base.tpl', title='Change PW', message=message)
 
-{# base.html の title の中に入れるコンテンツ #}
-{% block title %}
-{{ name }} のページ
-{% endblock %}
-
-{# base.html の contents の中に入れるコンテンツ #}
-
-{% block contents %}
-%m=message
-%print(message)
-%print(m)
-<p>test {{ m }} </p>
     <form action="{{ appUrl }}/user/pw" method="post">
       <table>
         <tr><td>Current PW:</td><td><input type="password" name="current_pw" /></td></tr>
@@ -21,10 +9,5 @@
       <p>
       <input type="submit" value="submit">
     </form>
-{% endblock %}
-
-{% block sidemenu %}
-C（サイドバー1）
-{% endblock %}
-
-
+    <p>
+    <a href="/">TOP</a>

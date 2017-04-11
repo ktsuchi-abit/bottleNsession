@@ -73,9 +73,9 @@ class Auth:
             cls.set_role(role)
         return role
         
-    def  __init__(self,**kw):
+    def  __init__(self, appUrl, **kw):
         '''kw parameters are role, message and failure_redirect'''
-        for k,v in [('message', 'Login required'), ('failure_redirect', '/login')]:
+        for k,v in [('message', 'Login required'), ('failure_redirect', appUrl + '/login')]:
             setattr(self, k, kw.get(k, v))
         self.is_auth=(lambda :kw['role']==self.get_role()) if 'role' in kw else self.get_role
                             
