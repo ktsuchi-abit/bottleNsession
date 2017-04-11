@@ -135,10 +135,14 @@ def top():
 
 @btl.route(appUrl + '/top2')
 @req_login
-@btl.view(template('index2', name="main2", redirectUrl=redirectUrl, appUrl=appUrl))
+#@btl.view(template('index2', name="main2", redirectUrl=redirectUrl, appUrl=appUrl))
 def top2():
-    return {'message':ut.session_get('message', True),
-            'role':Auth.get_role()}
+    return template('index2', 
+                    name="main2", 
+                    redirectUrl=redirectUrl, 
+                    appUrl=appUrl,
+                    message=ut.session_get('message', True),
+                    role=Auth.get_role())
 
 if __name__ == "__main__":
     run(app=app,host="localhost", port=8080, debug=DEBUG, reloader=RELOADER)
