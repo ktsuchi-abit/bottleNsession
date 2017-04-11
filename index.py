@@ -60,7 +60,8 @@ def login_form():
 def login():
     uid,pw = [ut.form_get(x) for x in ('uid', 'pw')]
     if Auth.login(uid, pw):
-        ut.session_set('message', 'こんにちは、{} さん'.format(uid))
+        #ut.session_set('message', 'こんにちは、{} さん'.format(uid))
+        ut.session_set('uid', 'こんにちは、{} さん'.format(uid))
         return btl.redirect(redirectUrl)
     else:
         return {'message':'ID か Password が間違っています。'}
@@ -72,16 +73,23 @@ def logout():
 
 @btl.route(appUrl + '/user')
 @req_admin
-@btl.view('users')
+#@btl.view('users')
 def users():
-    return {'users':ut.users()}
+    return template('users',
+                    users=ut.users(),
+                    appUrl=appUrl,
+                    message=ut.session_get('message', True),
+                    role=Auth.get_role())
 
 
 @btl.get(appUrl + '/user/add')
 @req_admin
-@btl.view('add_user')
+#@btl.view('add_user')
 def add_user_form():
-    return {'message':ut.session_get('message', True)}
+    return template('add_user',
+                    appUrl=appUrl,    
+                    message=ut.session_get('message', True),
+                    role=Auth.get_role())
 
 
 @btl.post(appUrl + '/user/add')
@@ -98,14 +106,16 @@ def add_user():
     
 @btl.get(appUrl + '/user/pw')
 @req_login
-@btl.view(template('change_pw', appUrl=appUrl))
+#@btl.view(template('change_pw', appUrl=appUrl))
 def change_pw_form():
-    return {'message':ut.session_get('message', True),
-            'role':Auth.get_role()}
+    return template('change_pw', 
+            appUrl=appUrl,
+            message=ut.session_get('message', True),
+            role=Auth.get_role())
 
 @btl.post(appUrl + '/user/pw')
 @req_login
-@btl.view(template('change_pw', appUrl=appUrl))
+#@btl.view(template('change_pw', appUrl=appUrl))
 def change_pw():
     uid=ut.session_get('uid')
     current_pw, new_pw1, new_pw2 = [ut.form_get(x) for x in ('current_pw', 'new_pw1', 'new_pw2')]    
@@ -114,8 +124,10 @@ def change_pw():
         ut.session_set('message', msg)
         btl.redirect(redirectUrl)
     else:
-        return {'message':msg,
-                'role':Auth.get_role()}
+        return template('change_pw', 
+                        appUrl=appUrl,
+                        message=msg,
+                        role=Auth.get_role())
 
 #TOPページ
 @btl.route(redirectUrl)
