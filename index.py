@@ -60,8 +60,8 @@ def login_form():
 def login():
     uid,pw = [ut.form_get(x) for x in ('uid', 'pw')]
     if Auth.login(uid, pw):
-        #ut.session_set('message', 'こんにちは、{} さん'.format(uid))
-        ut.session_set('uid', 'こんにちは、{} さん'.format(uid))
+        ut.session_set('message', 'こんにちは、{} さん'.format(uid))
+        #ut.session_set('uid', 'こんにちは、{} さん'.format(uid))
         return btl.redirect(redirectUrl)
     else:
         return {'message':'ID か Password が間違っています。'}
@@ -119,11 +119,15 @@ def change_pw_form():
 def change_pw():
     uid=ut.session_get('uid')
     current_pw, new_pw1, new_pw2 = [ut.form_get(x) for x in ('current_pw', 'new_pw1', 'new_pw2')]    
+    #print("current_pw="+current_pw+" new_pw1="+new_pw1+" new_pw2="+ new_pw2)
     b, msg = ut.change_pw(uid, current_pw, new_pw1, new_pw2)
     if b:
+        print("OK "+uid)
         ut.session_set('message', msg)
         btl.redirect(redirectUrl)
     else:
+        print("NG "+uid)
+
         return template('change_pw', 
                         appUrl=appUrl,
                         message=msg,
@@ -137,6 +141,7 @@ def top():
 #    return {'message':ut.session_get('message', True),
 #            'role':Auth.get_role()}
     return template('index', 
+                    uid=ut.session_get('uid'),
                     name="main1", 
                     redirectUrl=redirectUrl, 
                     appUrl=appUrl,
