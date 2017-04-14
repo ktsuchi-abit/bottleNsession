@@ -60,7 +60,7 @@ def login_form():
 def login():
     uid,pw = [ut.form_get(x) for x in ('uid', 'pw')]
     if Auth.login(uid, pw):
-        ut.session_set('message', 'こんにちは、{} さん'.format(uid))
+        #ut.session_set('message', 'こんにちは、{} さん'.format(uid))
         #ut.session_set('uid', 'こんにちは、{} さん'.format(uid))
         return btl.redirect(redirectUrl)
     else:
