@@ -51,7 +51,7 @@ def get_role(uid, pw, **kw):
 
 def form_get(k):
     '''getting the value of k from the form'''
-    return btl.request.forms.get(k)
+    return btl.request.params.get(k)
 
 
 def logout():
@@ -102,3 +102,14 @@ def change_pw(uid, current_pw, new_pw1, new_pw2, **kw):
                    (hash_pw(uid, new_pw1), uid))
         db.commit()
         return (True, 'The password has been changed.')
+
+@with_db
+def change_pw_super(uid, new_pw1, new_pw2, **kw):
+    '''changing password'''
+    if new_pw1 != new_pw2: 
+        return (False, 'The two new passwords are different.')
+    db=kw['db']
+    db.execute('update users set pw=? where uid=?', 
+                   (hash_pw(uid, new_pw1), uid))
+    db.commit()
+    return (True, 'The password has been changed.')

@@ -1,6 +1,16 @@
-% rebase('base.tpl', title='Add User', message=message)
+{% extends 'base.html' %}
 
-    <form action="/user/add" method="post">
+{# base.html の title の中に入れるコンテンツ #}
+{% block title %}
+{{ name }} のページ
+{% endblock %}
+
+{# base.html の contents の中に入れるコンテンツ #}
+
+{% block contents %}
+
+
+    <form action="{{ appUrl }}/user/add" method="post">
       <table>
         <tr><td>Name:</td><td><input type="text" name="uid" /></td></tr>
         <tr><td>Password:</td><td><input type="password" name="pw" /></td></tr>
@@ -12,5 +22,9 @@
       <p>
       <input type="submit" value="submit">
     </form>
-    <p>
-    <a href="/">TOP</a>
+{% endblock %}
+
+{% block sidemenu %}
+C（サイドバー1）
+{% endblock %}
+

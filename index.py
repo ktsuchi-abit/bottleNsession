@@ -94,14 +94,22 @@ def add_user_form():
 
 @btl.post(appUrl + '/user/add')
 @req_admin
-@btl.view('add_user')
+#@btl.view('add_user')
 def add_user():
     r=ut.insert_user(*[ut.form_get(x) for x in ('uid', 'pw', 'role')])
     if r:
-        ut.session_set('message', 'add user done.')
-        btl.redirect(redirectUrl)
+        #ut.session_set('message', 'add user done.')
+        #btl.redirect(redirectUrl)
+        return template('add_user',
+                        appUrl=appUrl,    
+                        message='add user done.',
+                        role=Auth.get_role())
     else:
-        return {'message':'add user failed. try again.'}
+        #return {'message':'add user failed. try again.'}
+        return template('add_user',
+                        appUrl=appUrl,    
+                        message='add user failed. try again.',
+                        role=Auth.get_role())
 
     
 @btl.get(appUrl + '/user/pw')
@@ -111,22 +119,38 @@ def change_pw_form():
     return template('change_pw', 
             appUrl=appUrl,
             message=ut.session_get('message', True),
-            role=Auth.get_role())
+            role=Auth.get_role(),
+            user=ut.form_get('user'),
+            from_show_users=ut.form_get('from_show_users'))
 
 @btl.post(appUrl + '/user/pw')
 @req_login
 #@btl.view(template('change_pw', appUrl=appUrl))
 def change_pw():
     uid=ut.session_get('uid')
+    if ut.form_get('user'):
+        uid = ut.form_get('user')
+
     current_pw, new_pw1, new_pw2 = [ut.form_get(x) for x in ('current_pw', 'new_pw1', 'new_pw2')]    
     #print("current_pw="+current_pw+" new_pw1="+new_pw1+" new_pw2="+ new_pw2)
-    b, msg = ut.change_pw(uid, current_pw, new_pw1, new_pw2)
-    if b:
-        print("OK "+uid)
-        ut.session_set('message', msg)
-        btl.redirect(redirectUrl)
+    
+    #管理者の場合はカレントパスワード不要
+    if Auth.get_role() == 'admin':
+        b, msg = ut.change_pw_super(uid, new_pw1, new_pw2)
     else:
-        print("NG "+uid)
+        b, msg = ut.change_pw(uid, current_pw, new_pw1, new_pw2)
+
+    if b:
+        #ut.session_set('message', msg)
+        if ut.form_get('from_show_users') == "1":
+            return template('users',
+                            users=ut.users(),
+                            appUrl=appUrl,
+                            message=msg,
+                            role=Auth.get_role())
+        else:
+            btl.redirect(redirectUrl)
+    else:
 
         return template('change_pw', 
                         appUrl=appUrl,

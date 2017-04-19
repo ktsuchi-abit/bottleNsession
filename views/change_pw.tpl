@@ -11,8 +11,12 @@
 
 
     <form action="{{ appUrl }}/user/pw" method="post">
+      <input type="hidden" name="from_show_users" value="{{from_show_users}}">
+      <input type="hidden" name="user" value="{{user}}">
       <table>
+      {% if not role=='admin': %}
         <tr><td>Current PW:</td><td><input type="password" name="current_pw" /></td></tr>
+      {% endif %}
         <tr><td>New PW:</td><td><input type="password" name="new_pw1" /></td></tr>
         <tr><td>New PW:</td><td><input type="password" name="new_pw2" /></td></tr>
       </table>

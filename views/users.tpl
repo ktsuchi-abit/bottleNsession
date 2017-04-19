@@ -9,9 +9,9 @@
 
 {% block contents %}
     <table border="1">
-      <tr><th>UID</th><th>Role</th></tr>
+      <tr><th>UID</th><th>Role</th><th>パスワード変更</th></tr>
       {% for uid, role in users: %}
-      <tr><td>{{uid}}</td><td>{{role}}</td></tr>
+      <tr><td>{{uid}}</td><td>{{role}}</td><td><a href="{{ appUrl }}/user/pw?user={{ uid }}&from_show_users=1">Change</a></td></tr>
       {% endfor %}
     </table>
 {% endblock %}
